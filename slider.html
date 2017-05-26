@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="jquery-3.2.1.min.js"></script>
+  <style>
+    .slider{
+      position: relative;
+      width: 800px;
+      height: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      overflow: hidden;
+    }
+    .slider-item{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      visibility: hidden;
+      overflow: hidden;
+    }
+    .slider-item.active{
+      visibility: visible;
+    }
+    .control{
+      display: block;
+      position: absolute;
+      top: 135px;
+      background: blue;
+      padding: 5px;
+      z-index: 10;
+      cursor: pointer;
+      color: white;
+    }
+    .control.prev{
+      left: 0;
+    }
+    .control.next {
+      right: 0;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="slider">
+    <a class="control prev">Prev</a>
+    <div class="slider-item active">
+      <img src="1.jpg"/>
+    </div>
+    <div class="slider-item">
+      <img src="2.jpg"/>
+    </div>
+    <a class="control next" onclick="nextSlide()">Next</a>
+  </div>
+
+  <script>
+    var activeIndex = 0;
+    var sliderItems = $('.slider-item');
+
+    function nextSlide() {
+      var oldActiveItem = sliderItems.eq(activeIndex);
+      activeIndex++;
+      if(activeIndex >= sliderItems.length){
+        activeIndex = 0;
+      }
+      var newActiveItem = sliderItems.eq(activeIndex);
+      newActiveItem.css('left', '100%');
+      newActiveItem.addClass('active');
+
+      oldActiveItem.animate({left: '-100%'}, 100, function(){
+        oldActiveItem.removeClass('active');
+      });
+      newActiveItem.animate({
+        left: '0'
+      }, 100);
+    }
+
+  </script>
+</body>
+</html>
